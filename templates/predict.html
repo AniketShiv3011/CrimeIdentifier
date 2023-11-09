@@ -92,7 +92,7 @@
         <div class="row g-0">
           <div class="col-lg-5 quote-bg" style="background-image: url(/static/img/quote-bg.jpg);"></div>
           <div class="col-lg-7">
-            <form id="prediction-form" action="#predict" method="POST" class="php-email-form" enctype="multipart/form-data">
+            <form id="prediction-form" action=""  class="prediction-form"method="POST"  enctype="multipart/form-data">
 
               <h3>Identify Crime</h3>
               <p>Upload an image for analysis and prediction.</p>
@@ -101,27 +101,20 @@
                   <input type="file" name="image" class="form-control" accept="image/*" required>
                 </div>
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
+                  <div class="loading"></div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your prediction request has been sent successfully. Thank you!</div>
+                  <div class="sent-message"></div>
                   <button type="submit">Predict</button>
                 </div>
               </div>
             </form>
-
             
           </div><!-- End Quote Form -->
         </div>
       </div>
 
-    </section><!-- End Identify Crime Section -->
-    {% if prediction %}
-            <div id="prediction-result">
-
-            <!-- <img src="{{img_path}}" height="400px" width="400px"> -->
-            <h2> <i> {{prediction}} </i></h2></div>
-
-            {% endif %}
+     </section><!--End Identify Crime Section -->
+    
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -133,9 +126,7 @@
           <a href="index.html" class="logo d-flex align-items-center">
             <span>Crime Classifier</span>
           </a>
-          <p> We work closely with law enforcement agencies, complementing their efforts with community-generated data.
-            This collaboration strengthens the synergy between residents and law enforcement, leading to more efficient
-            crime prevention strategies.</p>
+          <p> We work closely with law enforcement agencies, complementing their efforts with community-generated data. This collaboration strengthens the synergy between residents and law enforcement, leading to more efficient crime prevention strategies.</p>
           <div class="social-links d-flex mt-4">
             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -147,18 +138,18 @@
         <div class="col-lg-2 col-6 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-
-
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About us</a></li>
+            
+            
             <li><a href="#">Privacy policy</a></li>
           </ul>
         </div>
 
-
+        
 
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>Contact Us</h4>
+         <h4> <a href="contact.html">Contact Us<a></h4>
           <p>
             A108 Adam Street <br>
             New York, NY 535022<br>
@@ -176,16 +167,39 @@
       <div class="copyright">
         &copy; Copyright <strong><span>Crime Classifier</span></strong>. All Rights Reserved
       </div>
-
+      
     </div>
 
   </footer><!-- End Footer -->
+  <!-- End Footer -->
   <!-- End Footer -->
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
 
-  
+      <script>
+        $(document).ready(function() {
+            $('#prediction-form').submit(function(event) {
+                event.preventDefault(); // Prevent the default form submission
+        
+                // Get the form data
+                var formData = new FormData(this);
+        
+                // Make an AJAX request to submit the form data
+                $.ajax({
+                    type: 'POST',
+                    url: '/predict.html', // Update to the correct endpoint URL
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // Update the result container with the prediction
+                        $('#prediction').html('<h2><i>' + response.prediction + '</i></h2>');
+                    }
+                });
+            });
+        });
+        </script>
 
   <!-- Vendor JS Files -->
   <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -198,33 +212,8 @@
   <!-- Template Main JS File -->
   <script src="/static/js/main.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-   $(document).ready(function() {
-  $('#prediction-form').submit(function(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    // Get the form data
-    var formData = new FormData(this);
-
-    // Make an AJAX request to submit the form data
-    $.ajax({
-      type: 'POST',
-      url: '/predict.html', // Replace with the actual endpoint URL
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        // Update the result container with the prediction
-        $('prediction').html('<h2><i>' + response.prediction + '</i></h2>');
-      }
-    });
-  });
-});
-
-  </script>
-  
-
-
+ 
+    
 
 
 

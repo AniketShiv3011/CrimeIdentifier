@@ -25,12 +25,16 @@ def about():
 @app.route('/contact.html', methods=['GET'])
 def contact():
     return render_template('contact.html')
-@app.route('/prediction')
+@app.route('/prediction.html', methods=['GET'])
 def prediction():
-    return render_template('predict.html')
-from PIL import Image
+    return render_template('prediction.html')
 
-@app.route('/predict.html', methods=['POST', 'GET'])
+from PIL import Image
+@app.route('/predict.html',methods=['GET'])
+def predict1():
+    return render_template('predict.html')
+
+@app.route('/predict.html', methods=['POST'])
 def predict():
     result = ""
     if request.method == 'POST':
@@ -56,7 +60,7 @@ def predict():
                 result = 'No image file provided.'
         except Exception as e:
             result = f'An error occurred: {str(e)}'
-    return render_template("predict.html", prediction=result)
+    return render_template("prediction.html", prediction=result)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1')
